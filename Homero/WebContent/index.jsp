@@ -10,8 +10,7 @@
 </head>
 <body>
 <form action="/Homero/Login" method="post">
-<h1><%//userid,%><% //userpass%></h1>
-<input type="text" name="name">
+<input type="text" name="userId">
 <input type="password" name="pass">
 <input type="submit" value="ログイン">
 </form>

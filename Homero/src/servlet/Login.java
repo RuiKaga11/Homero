@@ -2,11 +2,15 @@ package servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.User;
 
 /**
  * Servlet implementation class Login
@@ -29,6 +33,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//アカウント登録ページにリダイレクト。
+		response.sendRedirect("/Homero/account.jsp");
 	}
 
 	/**
@@ -36,6 +41,26 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//セッションスコープにユーザー情報を保存。ログアウト時に破棄する。
+
+		request.setCharacterEncoding("UTF-8");
+		String userId = request.getParameter("userId");
+		String pass = request.getParameter("pass");
+
+		//Userインスタンスの生成
+		User user = new User();
+		user.setUserId(userId);
+		user.setPass(pass);
+
+//		user.setUserId(userId);
+//		user.setPass(pass);
+		//passは保存せずに、ログインを通すところだけ使う（予定）
+
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }
